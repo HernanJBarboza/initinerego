@@ -19,7 +19,7 @@ class Database:
     @classmethod
     async def disconnect(cls) -> None:
         """Disconnect from MongoDB"""
-        if cls.client:
+        if cls.client is not None:
             cls.client.close()
             cls.client = None
             cls.db = None
@@ -27,7 +27,7 @@ class Database:
     @classmethod
     async def _create_indexes(cls) -> None:
         """Create database indexes"""
-        if cls.db:
+        if cls.db is not None:
             # Users collection indexes
             await cls.db.users.create_index("email", unique=True)
             await cls.db.users.create_index("created_at")
