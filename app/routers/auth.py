@@ -1,6 +1,6 @@
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer
 from bson import ObjectId
 from app.config.database import db
 from app.utils.auth_utils import (
@@ -13,7 +13,8 @@ from app.schemas.pydantic_models import (
     UserCreate, 
     UserResponse, 
     Token,
-    TokenData
+    TokenData,
+    LoginRequest
 )
 
 
@@ -95,12 +96,14 @@ async def register(user_data: UserCreate):
 
 
 @router.post("/login", response_model=Token)
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login(login_data: LoginRequest):
     """Login user and return access token"""
+    email = login_data.email
+    password = login_data.password
     users_collection = db.get_collection("users")
     
     # Find user by email
-    user_doc = await users_collection.find_one({"email": form_data.username})
+    user_doc = await users_collection.find_one({"email": email})
     if user_doc is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -110,7 +113,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     
     # Verify password
     hashed_password = user_doc.get("hashed_password", "")
-    if not verify_password(form_data.password, hashed_password):
+    if not verify_password(password, hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",

@@ -85,6 +85,11 @@ class TokenData(BaseModel):
     email: Optional[str] = None
 
 
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
 # ==================== VEHICLE SCHEMAS ====================
 class VehicleBase(BaseModel):
     vehicle_type: VehicleType

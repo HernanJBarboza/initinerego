@@ -20,7 +20,18 @@ class Settings(BaseSettings):
     MONGODB_DB_NAME: str = os.getenv("MONGODB_DB_NAME", "initinerego")
     
     # CORS settings
-    CORS_ORIGINS: list = ["http://localhost:3000", "http://localhost:19000", "http://localhost:19006"]
+    CORS_ORIGINS: list = [
+        "http://localhost:3000", 
+        "http://localhost:8081",
+        "http://localhost:19000", 
+        "http://localhost:19006",
+        "http://127.0.0.1:8081",
+        "http://127.0.0.1:19000",
+        "http://127.0.0.1:19006",
+        "https://initinerego-api-2df8651fd39b.herokuapp.com",
+        "https://expo.dev",
+        "https://exp.host"
+    ]
     
     class Config:
         env_file = ".env"
