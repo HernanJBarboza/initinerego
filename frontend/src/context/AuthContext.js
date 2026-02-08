@@ -64,6 +64,11 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true };
     } catch (err) {
+      // Handle network errors
+      if (!err.response) {
+        setError('No se puede conectar al servidor. Verifica tu conexión o el backend.');
+        return { success: false, error: 'No se puede conectar al servidor. Verifica tu conexión o el backend.' };
+      }
       const message = err.response?.data?.detail || 'Error al iniciar sesión';
       setError(message);
       return { success: false, error: message };
@@ -91,6 +96,11 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true };
     } catch (err) {
+      // Handle network errors
+      if (!err.response) {
+        setError('No se puede conectar al servidor. Verifica tu conexión o el backend.');
+        return { success: false, error: 'No se puede conectar al servidor. Verifica tu conexión o el backend.' };
+      }
       const message = err.response?.data?.detail || 'Error al registrar usuario';
       setError(message);
       return { success: false, error: message };
