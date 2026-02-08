@@ -1,0 +1,3 @@
+# Python requirements for Heroku deployment
+# These packages are installed from backend/requirements.txt
+-r backend/requirements.txt
