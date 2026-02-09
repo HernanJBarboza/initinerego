@@ -115,11 +115,8 @@ export const iconSizes = {
 };
 
 // API Configuration
-// Change to your local or production URL
-const ENV = process.env.NODE_ENV || 'development';
-export const API_BASE_URL = ENV === 'production' 
-  ? 'https://initinerego-api-2df8651fd39b.herokuapp.com/api/v1'
-  : 'http://localhost:8000/api/v1';
+// Use Heroku URL directly for testing
+export const API_BASE_URL = 'https://initinerego-api-2df8651fd39b.herokuapp.com/api/v1';
 
 // Vehicle Types
 export const vehicleTypes = {
